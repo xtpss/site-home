@@ -1,8 +1,7 @@
 import ejs from "ejs";
 import path from "node:path";
 import { glob } from "tinyglobby";
-import type { PluginOption } from "vite";
-import { normalizePath } from "vite";
+import { normalizePath, send, type PluginOption } from "vite";
 
 type FileEntry = {
   filePath: string;
@@ -117,7 +116,10 @@ export default function (options?: Options): PluginOption {
       },
     },
     configureServer(server) {
-      server.middlewares.use(async (req, res, next) => {
+      server.middlewares.use(async function virtualHtmlMiddleware(req, res, next) {
+        if (res.writableEnded) {
+          return next();
+        }
         if (req.method !== "GET" && req.method !== "HEAD") {
           return next();
         }
@@ -131,12 +133,9 @@ export default function (options?: Options): PluginOption {
         if (!fileEntry) {
           return next();
         }
-        const htmlSource = await renderEjsToHtml(fileEntry.filePath);
-        const html = await server.transformIndexHtml(requestPath, htmlSource, req.originalUrl);
-        res.statusCode = 200;
-        res.appendHeader("Content-Type", "text/html; charset=utf-8");
-        res.appendHeader("Cache-Control", "no-cache");
-        res.end(html);
+        let html = await renderEjsToHtml(fileEntry.filePath);
+        html = await server.transformIndexHtml(requestPath, html, req.originalUrl);
+        return send(req, res, html, "html", { headers: server.config.server.headers });
       });
     },
   };
