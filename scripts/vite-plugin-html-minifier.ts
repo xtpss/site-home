@@ -11,8 +11,9 @@ export default function (options?: Options): PluginOption {
   if (options === undefined || options.minify !== false) {
     mergedOptions = {
       collapseWhitespace: true,
-      removeRedundantAttributes: true,
-      removeEmptyAttributes: true,
+      removeRedundantAttributes: false,
+      removeEmptyAttributes: false,
+      keepClosingSlash: true,
       minifyCSS: true,
       minifyJS: true,
     };

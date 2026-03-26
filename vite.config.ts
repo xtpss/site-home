@@ -3,6 +3,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 import solid from "vite-plugin-solid";
+import { sri } from "vite-plugin-sri3";
 
 import ejsHmpa from "./scripts/vite-plugin-ejs-hmpa";
 import htmlMinifier from "./scripts/vite-plugin-html-minifier";
@@ -24,5 +25,5 @@ export default defineConfig({
     "process.env.BUILD_AT": JSON.stringify(new Date().toISOString()),
     "process.env.COMMIT_ID": JSON.stringify(process.env.COMMIT_ID || "N/A"),
   },
-  plugins: [tailwindcss(), ejsHmpa(), solid(), htmlMinifier()],
+  plugins: [tailwindcss(), ejsHmpa(), solid(), htmlMinifier(), sri()],
 });
