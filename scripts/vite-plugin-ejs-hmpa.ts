@@ -1,5 +1,7 @@
-import ejs from "ejs";
+import ejs, { type Data as EjsData } from "ejs";
+import fs from "node:fs/promises";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { glob } from "tinyglobby";
 import { normalizePath, send, type PluginOption } from "vite";
 
@@ -17,6 +19,7 @@ export interface Options {
 
 export default function (options?: Options): PluginOption {
   const currentWorkingDir = process.cwd();
+  const tsExt = ".ts";
   const ejsExt = options?.ext ?? ".ejs";
   const ejsExtRegex = new RegExp(`${ejsExt}$`, "i");
   const htmlExt = ".html";
@@ -27,16 +30,33 @@ export default function (options?: Options): PluginOption {
 
   let resolvedRoot: string = currentWorkingDir;
 
-  const renderEjsToHtml = async (ejsFile: string): Promise<string> => {
-    return await ejs.renderFile(
-      ejsFile,
-      {},
-      {
-        views: [path.dirname(ejsFile), resolvedRoot],
-        root: [resolvedRoot],
-        beautify: false,
-      },
-    );
+  const renderEjsToHtml = async (fileEntry: FileEntry): Promise<string> => {
+    const ejsFile = fileEntry.filePath;
+    const dataLoaderFile = ejsFile.replace(ejsExtRegex, tsExt);
+    const ejsData: EjsData = {};
+    try {
+      await fs.access(dataLoaderFile);
+      const dataLoaderUrl = pathToFileURL(dataLoaderFile).href;
+      const dataLoader = await import(dataLoaderUrl);
+      const [meta, data] = await Promise.all([
+        typeof dataLoader.meta === "function" ? dataLoader.meta() : null,
+        typeof dataLoader.data === "function" ? dataLoader.data() : null,
+      ]);
+      if (meta) {
+        ejsData.meta = meta;
+      }
+      if (data) {
+        ejsData.data = data;
+      }
+    } catch {
+      // No data file or error in importing, proceed with empty data
+    }
+
+    return await ejs.renderFile(ejsFile, ejsData, {
+      views: [path.dirname(ejsFile), resolvedRoot],
+      root: [resolvedRoot],
+      beautify: false,
+    });
   };
 
   const resolveFileEntry = (requestPath: string): FileEntry | void => {
@@ -104,13 +124,13 @@ export default function (options?: Options): PluginOption {
         id: htmlExtRegex,
       },
       async handler(id) {
-        const entry = fileEntries.get(id);
-        if (!entry) {
+        const fileEntry = fileEntries.get(id);
+        if (!fileEntry) {
           return null;
         }
-        const htmlSource = await renderEjsToHtml(entry.filePath);
+        const html = await renderEjsToHtml(fileEntry);
         return {
-          code: htmlSource,
+          code: html,
           moduleSideEffects: "no-treeshake",
         };
       },
@@ -133,7 +153,7 @@ export default function (options?: Options): PluginOption {
         if (!fileEntry) {
           return next();
         }
-        let html = await renderEjsToHtml(fileEntry.filePath);
+        let html = await renderEjsToHtml(fileEntry);
         html = await server.transformIndexHtml(requestPath, html, req.originalUrl);
         return send(req, res, html, "html", { headers: server.config.server.headers });
       });
