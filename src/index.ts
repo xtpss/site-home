@@ -1,4 +1,4 @@
-export function meta() {
+export function meta(): MetaItem[] {
   return [
     {
       name: "description",
@@ -16,5 +16,6 @@ export function data() {
     name: "vite-plugin-ejs-hmpa",
     version: "1.0.0",
     buildAt: new Date().toISOString(),
+    commitId: process.env.COMMIT_ID || "N/A",
   };
 }

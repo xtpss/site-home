@@ -1,3 +1,5 @@
 # About
 
-Welcome to my web site.
+Vite + ejs + tailwindcss + SolidJs
+
+Let web pages return to their origin.

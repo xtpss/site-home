@@ -21,9 +21,5 @@ export default defineConfig({
     emptyOutDir: true,
     assetsDir: "_static",
   },
-  define: {
-    "process.env.BUILD_AT": JSON.stringify(new Date().toISOString()),
-    "process.env.COMMIT_ID": JSON.stringify(process.env.COMMIT_ID || "N/A"),
-  },
   plugins: [tailwindcss(), ejsHmpa(), solid(), htmlMinifier(), sri()],
 });

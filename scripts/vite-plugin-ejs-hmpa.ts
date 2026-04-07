@@ -33,7 +33,10 @@ export default function (options?: Options): PluginOption {
   const renderEjsToHtml = async (fileEntry: FileEntry): Promise<string> => {
     const ejsFile = fileEntry.filePath;
     const dataLoaderFile = ejsFile.replace(ejsExtRegex, tsExt);
-    const ejsData: EjsData = {};
+    const ejsData: EjsData = {
+      meta: [],
+      data: {},
+    };
     try {
       await fs.access(dataLoaderFile);
       const dataLoaderUrl = pathToFileURL(dataLoaderFile).href;

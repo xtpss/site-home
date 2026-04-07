@@ -11,4 +11,7 @@ export default defineConfig([
     languageOptions: { globals: globals.browser },
   },
   tseslint.configs.recommended,
+  {
+    ignores: ["dist/**", "node_modules/**", "**/*.d.ts"],
+  },
 ]);

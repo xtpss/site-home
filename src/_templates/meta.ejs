@@ -1,10 +1,30 @@
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="keywords" content="Software Engineer, Web Developer, Frontend, Backend, Full Stack" />
+<% const normalized={ charset: undefined, viewport: undefined, keywords: undefined, description: undefined, author:
+undefined, }; const others=[]; const metaList=typeof meta !=="undefined" && Array.isArray(meta) ? meta : []; for (const
+item of metaList) { if (!item || typeof item !=="object" ) { continue; } const name=typeof item.name==="string" ?
+item.name.toLowerCase() : "" ; if (typeof item.charset==="string" && !normalized.charset) {
+normalized.charset=item.charset; continue; } if (name==="charset" && typeof item.content==="string" &&
+!normalized.charset) { normalized.charset=item.content; continue; } if ( (name==="viewport" || name==="keywords" ||
+name==="description" || name==="author" ) && typeof item.content==="string" && !normalized[name] ) {
+normalized[name]=item.content; continue; } others.push(item); } %>
+<meta charset="<%= normalized.charset || `utf-8` %>" />
+<meta name="viewport" content="<%= normalized.viewport || `width=device-width, initial-scale=1.0` %>" />
+<meta
+  name="keywords"
+  content="<%= normalized.keywords || `Software Engineer, Web Developer, Frontend, Backend, Full Stack` %>"
+/>
 <meta
   name="description"
-  content="YiFei Wang's personal website showcasing projects, skills, and experience in software development."
+  content="<%= normalized.description || `YiFei Wang's personal website showcasing projects, skills, and experience in software development.` %>"
 />
-<meta name="author" content="YiFei Wang" />
+<meta name="author" content="<%= normalized.author || `YiFei Wang` %>" />
+<% for (const item of others) { %> <% if (typeof item.charset==="string" ) { %>
+<meta charset="<%= item.charset %>" />
+<% } else if (typeof item.name==="string" && typeof item.content==="string" ) { %>
+<meta name="<%= item.name %>" content="<%= item.content %>" />
+<% } else if (typeof item.property==="string" && typeof item.content==="string" ) { %>
+<meta property="<%= item.property %>" content="<%= item.content %>" />
+<% } else if (typeof item["http-equiv"]==="string" && typeof item.content==="string" ) { %>
+<meta http-equiv="<%= item['http-equiv'] %>" content="<%= item.content %>" />
+<% } %> <% } %>
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="stylesheet" href="/global.css" />
