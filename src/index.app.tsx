@@ -5,7 +5,7 @@ if (root) {
   render(
     () => (
       <div class="relative h-full p-8">
-        <div>In building</div>
+        <div>In building, SolidJs</div>
       </div>
     ),
     root,
