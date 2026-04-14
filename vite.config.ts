@@ -22,4 +22,7 @@ export default defineConfig({
     assetsDir: "_static",
   },
   plugins: [tailwindcss(), ejsHmpa(), solid(), htmlMinifier(), sri()],
+  define: {
+    "process.env.COMMIT_ID": JSON.stringify(process.env.COMMIT_ID || "N/A"),
+  },
 });

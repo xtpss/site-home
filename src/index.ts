@@ -2,20 +2,24 @@ export function meta(): MetaItem[] {
   return [
     {
       name: "description",
-      content: "A Vite plugin for rendering EJS templates in a multi-page application setup.",
+      content: "Yifei Wang's personal website showcasing projects, skills, and experience in software development.",
     },
     {
       name: "keywords",
-      content: "vite, plugin, ejs, multi-page application, hmpa, html rendering",
+      content: "Software Engineer, Web Developer, Frontend, Backend, Full Stack",
+    },
+    {
+      name: "author",
+      content: "Yifei Wang",
     },
   ];
 }
 
 export function data() {
   return {
-    name: "vite-plugin-ejs-hmpa",
+    name: "Yifei Wang's Personal Website",
     version: "1.0.0",
+    author: "Yifei Wang",
     buildAt: new Date().toISOString(),
-    commitId: process.env.COMMIT_ID || "N/A",
   };
 }

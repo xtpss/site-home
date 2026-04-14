@@ -1,13 +1,12 @@
 import { render } from "solid-js/web";
 
-const root = document.getElementById("root");
+const App = () => {
+  return <div></div>;
+};
+
+const root = document.getElementById("render-root");
 if (root) {
-  render(
-    () => (
-      <div class="relative h-full p-8">
-        <div>In building, SolidJs</div>
-      </div>
-    ),
-    root,
-  );
+  render(App, root);
 }
+
+console.log(process.env.COMMIT_ID);

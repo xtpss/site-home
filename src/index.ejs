@@ -5,12 +5,24 @@
     <title>小牛满满</title>
   </head>
   <body>
-    <div class="relative h-full p-8">
-      <div>In building</div>
-      <div><%= data.buildAt %></div>
-      <div><%= data.commitId %></div>
+    <div data-renderer="h-SSG" class="relative flex min-h-screen flex-col">
+      <header class="h-16 shrink-0"></header>
+      <main class="flex-1">
+        <div class="h-500"></div>
+      </main>
+      <footer class="px-4 py-2">
+        <div class="flex flex-col gap-4 md:flex-row">
+          <div class="flex-1"></div>
+          <div class="flex flex-col items-end gap-1 text-xs">
+            <div>©2026 <span><%= data.author %></span></div>
+            <div>
+              <span>Last updated on <span><%= data.buildAt %></span></span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
-    <div id="root" />
+    <div data-renderer="d-SolidJS" id="render-root"></div>
     <script type="module" src="index.app.tsx"></script>
   </body>
 </html>
