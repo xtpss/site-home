@@ -11,9 +11,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview",
+    "preview": "npm run build && wrangler dev",
     "format": "prettier --write .",
-    "lint": "eslint . --ext .ts,.tsx --fix"
+    "lint": "eslint . --ext .ts,.tsx --fix",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "solid-js": "^1.9.11"
@@ -36,6 +37,7 @@
     "typescript-eslint": "^8.57.2",
     "vite": "^8.0.1",
     "vite-plugin-solid": "^2.11.11",
-    "vite-plugin-sri3": "^2.0.0"
+    "vite-plugin-sri3": "^2.0.0",
+    "wrangler": "^4.82.2"
   }
 }
