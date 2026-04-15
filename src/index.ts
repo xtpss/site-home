@@ -23,14 +23,7 @@ export function meta(): MetaItem[] {
 }
 
 export function data() {
-  const bundleData: Record<string, unknown> = {
-    author: author || "",
-    buildAt: new Date().toISOString(),
-    mpsText: process.env.LEGALIZED_MPS_TEXT || "",
-    mpsLink: process.env.LEGALIZED_MPS_LINK || "",
-    mittText: process.env.LEGALIZED_MITT_TEXT || "",
-    mittLink: process.env.LEGALIZED_MITT_LINK || "",
-  };
+  const bundleData: Record<string, unknown> = {};
 
   return bundleData;
 }

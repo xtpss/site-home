@@ -9,4 +9,4 @@ if (root) {
   render(App, root);
 }
 
-console.log(process.env.COMMIT_ID?.slice(0, 8));
+console.log(`Commit ID: ${process.env.COMMIT_ID?.slice(0, 8)}`);

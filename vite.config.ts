@@ -16,6 +16,7 @@ const outDir = resolve(__dirname, "dist");
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, __dirname, "");
   Object.assign(process.env, env);
+  process.env.BUILD_AT = new Date().toISOString();
 
   return {
     root: root,
@@ -28,6 +29,7 @@ export default defineConfig(({ mode }) => {
     plugins: [tailwindcss(), ejsHmpa(), solid(), htmlMinifier(), sri()],
     define: {
       "process.env.COMMIT_ID": JSON.stringify(process.env.COMMIT_ID || "N/A"),
+      "process.env.BUILD_AT": JSON.stringify(process.env.BUILD_AT),
     },
   };
 });

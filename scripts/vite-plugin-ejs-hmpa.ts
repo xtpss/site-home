@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { glob } from "tinyglobby";
-import { normalizePath, send, type PluginOption } from "vite";
+import { normalizePath, runnerImport, send, type PluginOption, type UserConfig } from "vite";
 
 type FileEntry = {
   filePath: string;
@@ -28,6 +28,7 @@ export default function (options?: Options): PluginOption {
 
   const fileEntries = new Map<string, FileEntry>();
 
+  let userConfig: UserConfig = {};
   let resolvedRoot: string = currentWorkingDir;
 
   const renderEjsToHtml = async (fileEntry: FileEntry): Promise<string> => {
@@ -40,7 +41,8 @@ export default function (options?: Options): PluginOption {
     try {
       await fs.access(dataLoaderFile);
       const dataLoaderUrl = pathToFileURL(dataLoaderFile).href;
-      const dataLoader = await import(dataLoaderUrl);
+      const dynamicLoader = await runnerImport(dataLoaderUrl, userConfig);
+      const dataLoader = dynamicLoader.module as { meta?: () => Promise<unknown>; data?: () => Promise<unknown> };
       const [meta, data] = await Promise.all([
         typeof dataLoader.meta === "function" ? dataLoader.meta() : null,
         typeof dataLoader.data === "function" ? dataLoader.data() : null,
@@ -83,6 +85,7 @@ export default function (options?: Options): PluginOption {
     name: "private:vite-plugin-ejs-hmpa",
     enforce: "pre",
     async config(config) {
+      userConfig = config;
       fileEntries.clear();
 
       const rootDir = path.resolve(config.root || "");
