@@ -1,0 +1,18 @@
+<% if ( process.env.LEGALIZED_MPS_TEXT || process.env.LEGALIZED_MITT_TEXT ) { %>
+<ul class="flex items-center justify-center text-sm max-sm:flex-col sm:gap-4">
+  <% if (process.env.LEGALIZED_MPS_TEXT) { %>
+  <li class="flex items-center gap-1">
+    <img class="h-4" src="./images/beian.png" alt="beian" />
+    <a href="<%= process.env.LEGALIZED_MPS_LINK %>" target="_blank" rel="noopener noreferrer"
+      ><%= process.env.LEGALIZED_MPS_TEXT %></a
+    >
+  </li>
+  <% } if (process.env.LEGALIZED_MITT_TEXT) { %>
+  <li class="flex items-center gap-1">
+    <a href="<%= process.env.LEGALIZED_MITT_LINK %>" target="_blank" rel="noopener noreferrer"
+      ><%= process.env.LEGALIZED_MITT_TEXT %></a
+    >
+  </li>
+  <% } %>
+</ul>
+<% } %>
