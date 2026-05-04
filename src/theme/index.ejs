@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('_templates/meta', { meta }); %>
+    <title>主题 | 小牛满满</title>
+  </head>
+  <body class="bg-stone-100">
+    <div class="relative flex min-h-screen flex-col">
+      <main
+        class="bg-linear-[-45deg] from-transparent from-50% via-zinc-200 via-50% to-transparent to-51% bg-size-[12px_12px] p-6"
+      >
+        <section class="min-h-200 rounded-lg bg-white p-6"></section>
+        <section class="mt-6 min-h-200 rounded-lg bg-white p-6"></section>
+      </main>
+      <footer class="bg-neutral-900 px-6 py-4 text-neutral-200">
+        <!-- legal start -->
+        <%- include('_templates/legal'); %>
+        <!-- legal end -->
+        <!-- copyright start -->
+        <%- include('_templates/copyright'); %>
+        <!-- copyright end -->
+      </footer>
+    </div>
+  </body>
+</html>

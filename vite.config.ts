@@ -26,6 +26,10 @@ export default defineConfig(({ mode }) => {
       emptyOutDir: true,
       assetsDir: "_static",
     },
+    server: {
+      host: "0.0.0.0",
+      allowedHosts: true,
+    },
     plugins: [tailwindcss(), ejsHmpa(), solid(), htmlMinifier(), sri()],
     define: {
       "process.env.COMMIT_ID": JSON.stringify(process.env.COMMIT_ID || "N/A"),

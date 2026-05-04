@@ -3,9 +3,15 @@
   <head>
     <%- include('_templates/meta', { meta }); %>
     <title>小牛满满</title>
+    <style type="text/css">
+      .xz-bg-linear {
+        --xz-bg-line-color: var(--xz-bg-color, #dcd8d880);
+        @apply bg-[linear-gradient(-45deg,var(--xz-bg-line-color)_0_1px,transparent_1px_14px,var(--xz-bg-line-color)_14px_15px,transparent_15px_100%)] bg-size-[20px_20px];
+      }
+    </style>
   </head>
   <body class="bg-stone-100">
-    <div data-renderer="h-SSG" class="relative flex min-h-screen flex-col">
+    <div class="relative flex min-h-screen flex-col bg-[linear-gradient(15deg,#d1be358f_8px,#f9bc4854,transparent)]">
       <header class="fixed top-0 h-16 w-full bg-olive-50/80 backdrop-blur-sm">
         <div class="flex h-full items-center">
           <div class="h-full p-2">
@@ -13,20 +19,31 @@
           </div>
         </div>
       </header>
-      <main
-        class="mt-16 bg-linear-[-45deg] from-transparent from-50% via-zinc-200 via-50% to-transparent to-51% bg-size-[64px_64px] p-6"
-      >
-        <section class="min-h-200 rounded-lg bg-white p-6">
-          <h2 class="mb-4 text-2xl font-bold">欢迎来到 <span class="text-amber-500">ycan.cc</span></h2>
-          <p class="mb-4">这是一个示例页面，通过示例页面，进行布局样式调试。</p>
-          <UA />
+      <main class="mt-16 flex-1 p-6 [&_section]:mt-6">
+        <template id="tpl-section">
+          <section class="rounded-lg bg-white p-6"></section>
+        </template>
+        <section class="rounded-lg bg-white p-6">
+          <h2 class="my-4 text-2xl font-bold">
+            欢迎来到
+            <span class="text-amber-500 opacity-0 transition-opacity duration-700 ease-out" id="hostname"></span>
+          </h2>
         </section>
-        <section class="mt-6 min-h-200 rounded-lg bg-white p-6">
-          <h2 class="mb-4 text-2xl font-bold">关于我</h2>
-          <p>我是一名前端开发者，喜欢探索各种前端技术和工具。</p>
+        <section class="rounded-lg bg-white p-6">
+          <div id="ua-normal" class="wrap-break-word"></div>
+          <div id="ua-data" class="wrap-break-word"></div>
+        </section>
+        <section class="rounded-lg bg-white p-6">
+          <h3 class="mb-4 text-xl font-semibold">关于本站</h3>
+          <p class="mb-4 text-gray-700">
+            这是一个个人开发学习使用的网站。本站不存储任何用户数据，所有操作仅限于本地环境。
+          </p>
+          <p class="text-gray-700">
+            请注意，本站仅供个人开发学习使用，不得用于任何非法活动或商业用途。用户应自行承担使用本站的风险，并遵守相关法律法规。
+          </p>
         </section>
       </main>
-      <footer class="px-6 py-4">
+      <footer class="bg-neutral-900 px-6 py-4 text-neutral-200">
         <!-- legal start -->
         <%- include('_templates/legal'); %>
         <!-- legal end -->
@@ -35,7 +52,7 @@
         <!-- copyright end -->
       </footer>
     </div>
-    <div data-renderer="d-SolidJS" id="render-root"></div>
+    <div data-renderer="solidJS" id="solidJSRoot"></div>
     <script type="module" src="index.app.tsx"></script>
   </body>
 </html>
