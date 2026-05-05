@@ -1,14 +1,3 @@
-import { render } from "solid-js/web";
-
-const App = () => {
-  return <div></div>;
-};
-
-const root = document.getElementById("solidJSRoot");
-if (root) {
-  render(App, root);
-}
-
 const $printEnv = () => {
   console.log(`Commit ID: ${process.env.COMMIT_ID?.slice(0, 8)}`);
 };

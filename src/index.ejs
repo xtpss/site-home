@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include('_templates/meta', { meta }); %>
+    <%- include('_tpl/meta', { meta }); %>
     <title>小牛满满</title>
     <style type="text/css">
       .xz-bg-linear {
@@ -15,7 +15,7 @@
       <header class="fixed top-0 h-16 w-full bg-olive-50/80 backdrop-blur-sm">
         <div class="flex h-full items-center">
           <div class="h-full p-2">
-            <img src="./logo.svg" alt="Logo" class="h-full object-contain" />
+            <img src="/logo.svg" alt="Logo" class="h-full object-contain" />
           </div>
         </div>
       </header>
@@ -45,14 +45,13 @@
       </main>
       <footer class="bg-neutral-900 px-6 py-4 text-neutral-200">
         <!-- legal start -->
-        <%- include('_templates/legal'); %>
+        <%- include('_tpl/legal'); %>
         <!-- legal end -->
         <!-- copyright start -->
-        <%- include('_templates/copyright'); %>
+        <%- include('_tpl/copyright'); %>
         <!-- copyright end -->
       </footer>
     </div>
-    <div data-renderer="solidJS" id="solidJSRoot"></div>
     <script type="module" src="index.app.tsx"></script>
   </body>
 </html>

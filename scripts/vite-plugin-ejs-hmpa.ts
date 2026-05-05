@@ -11,7 +11,7 @@ type FileEntry = {
 };
 
 export interface Options {
-  /** @default ["_templates/**"] */
+  /** @default ["_*\/**"] */
   exclude?: string | string[];
   /** @default ".ejs" */
   ext?: string;
@@ -24,7 +24,7 @@ export default function (options?: Options): PluginOption {
   const ejsExtRegex = new RegExp(`${ejsExt}$`, "i");
   const htmlExt = ".html";
   const htmlExtRegex = new RegExp(`${htmlExt}$`, "i");
-  const exclude = options?.exclude ?? ["_templates/**"];
+  const exclude = options?.exclude ?? ["_*/**"];
 
   const fileEntries = new Map<string, FileEntry>();
 
